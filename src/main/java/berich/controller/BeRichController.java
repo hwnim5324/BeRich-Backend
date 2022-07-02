@@ -1,5 +1,6 @@
 package berich.controller;
 
+import berich.DTO.AssetsDTO;
 import berich.DTO.StockDTO;
 import berich.DTO.UserDTO;
 import org.springframework.stereotype.Controller;
@@ -29,8 +30,26 @@ public class BeRichController {
     public int LoginApi(@RequestBody UserDTO user){
         int statecode = 0;
 
-
+        // codes to do
 
         return statecode;
+    }
+
+    @GetMapping("assets")
+    public AssetsDTO AssetsApi(@RequestParam("userCode") String userCode){
+        AssetsDTO assets;
+
+        //codes to do
+
+        return assets;
+    }
+
+    @PatchMapping("assets")
+    public AssetsDTO AssetsApi(@RequestBody AssetsDTO updated_Assets){
+        AssetsDTO assets;
+
+        //codes to do
+
+        return assets;
     }
 }
