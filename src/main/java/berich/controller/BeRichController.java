@@ -37,7 +37,7 @@ public class BeRichController {
 
     @GetMapping("assets")
     public AssetsDTO AssetsApi(@RequestParam("userCode") String userCode){
-        AssetsDTO assets;
+        AssetsDTO assets = new AssetsDTO();
 
         //codes to do
 
@@ -46,7 +46,7 @@ public class BeRichController {
 
     @PatchMapping("assets")
     public AssetsDTO AssetsApi(@RequestBody AssetsDTO updated_Assets){
-        AssetsDTO assets;
+        AssetsDTO assets = new AssetsDTO();
 
         //codes to do
 

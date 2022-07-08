@@ -1,10 +1,16 @@
 package berich.DTO;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class UserDTO {
+
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int usercode;
     private String name;
-    private int birth;
-
     private String id;
     private String password;
 
@@ -22,14 +28,6 @@ public class UserDTO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getBirth() {
-        return birth;
-    }
-
-    public void setBirth(int birth) {
-        this.birth = birth;
     }
 
     public String getId() {

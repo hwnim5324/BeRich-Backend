@@ -1,14 +1,38 @@
 package berich.service;
 
 import berich.DTO.UserDTO;
+import berich.repository.JPAUserRepository;
+import org.apache.catalina.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
+@Service
 public class UserService {
-    private UserDTO user;
+    private JPAUserRepository jpauserrepository;
 
-    public int login(){
-        int stateCode = 0;
+    @Autowired
+    public UserService(JPAUserRepository jpauserrepository) {
+        this.jpauserrepository = jpauserrepository;
+    }
 
-        return -1;
+    public UserDTO create(UserDTO user){
+        return jpauserrepository.save(user);
+    }
+
+    public Optional<UserDTO> read(int id){
+        return jpauserrepository.findById(id);
+    }
+
+    public UserDTO update(int id, String pw){
+        UserDTO user = read(id).get();
+        user.setPassword(pw);
+        return jpauserrepository.save(user);
+    }
+
+    public void delete(int id){
+        jpauserrepository.deleteById(id);
     }
 
 }
