@@ -1,6 +1,5 @@
 spring:
   datasource:
-    #url: jdbc:h2:tcp://203.229.62.18/~/BeRich
     url: jdbc:mysql://203.229.62.18:3306/BeRich?characterEncoding=UTF-8&serverTimezone=UTC
     username: hwnim5324
     password: nam5324

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
+@CrossOrigin(origins="*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -20,6 +20,7 @@ public class UserController {
 
     @PostMapping("signup")
     public ResponseEntity<UserDTO> SignupApi(@RequestBody UserDTO user){
+        System.out.println(user);
         return ResponseEntity.ok()
                 .body(userService.create(user));
     }
