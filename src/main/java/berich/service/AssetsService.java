@@ -1,16 +1,16 @@
 package berich.service;
 
 import berich.DTO.AssetsDTO;
+import berich.repository.JPAAssetsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AssetsService {
-    private AssetsDTO user;
+    private JPAAssetsRepository jpaassetsrepository;
 
-    public int updateAssets(AssetsDTO assets){
-        int stateCode = 0;
-
-
-
-        return stateCode;
+    @Autowired
+    public AssetsService(JPAAssetsRepository jpaassetsrepository) {
+        this.jpaassetsrepository = jpaassetsrepository;
     }
-
 }
