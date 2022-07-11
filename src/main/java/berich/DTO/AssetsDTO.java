@@ -2,32 +2,39 @@ package berich.DTO;
 
 import org.json.simple.JSONArray;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity(name="assets")
 public class AssetsDTO {
-    private int userCode;
-    private int cash;
-    private JSONArray holdList = new JSONArray();
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int usercode;
+    private int deposit;
+    private String stocks;
 
     public int getUserCode() {
-        return userCode;
+        return usercode;
     }
 
     public void setUserCode(int userCode) {
-        this.userCode = userCode;
+        this.usercode = userCode;
     }
 
-    public int getCash() {
-        return cash;
+    public int getDeposit() {
+        return deposit;
     }
 
-    public void setCash(int cash) {
-        this.cash = cash;
+    public void setDeposit(int deposit) {
+        this.deposit = deposit;
     }
 
-    public JSONArray getHoldList() {
-        return holdList;
+    public String getStocks() {
+        return stocks;
     }
 
-    public void setHoldList(JSONArray holdList) {
-        this.holdList = holdList;
+    public void setStocks(String stocks) {
+        this.stocks = stocks;
     }
 }
