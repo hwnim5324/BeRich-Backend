@@ -20,8 +20,6 @@ public class UserController {
 
     @PostMapping("signup")
     public ResponseEntity<UserDTO> SignupApi(@RequestBody UserDTO user){
-        System.out.println(user);
-        return ResponseEntity.ok()
-                .body(userService.create(user));
+        return ResponseEntity.ok().body(userService.create(user));
     }
 }

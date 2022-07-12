@@ -25,8 +25,13 @@ public class UserService {
         return jpauserrepository.findById(id);
     }
 
-    public UserDTO update(int id, String pw){
-        UserDTO user = read(id).get();
+    public int login(String id,String pw){
+
+        return -1;
+    }
+
+    public UserDTO update(int usercode, String pw){
+        UserDTO user = read(usercode).get();
         user.setPassword(pw);
         return jpauserrepository.save(user);
     }
