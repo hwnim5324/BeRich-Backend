@@ -5,14 +5,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+
 @Entity(name = "user")
 public class UserDTO {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int usercode;
     private String name;
-    private String id;
+    private String userId;
     private String password;
+    private String like;
 
     public int getUsercode() {
         return usercode;
@@ -31,11 +33,11 @@ public class UserDTO {
     }
 
     public String getId() {
-        return id;
+        return userId;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.userId = id;
     }
 
     public String getPassword() {
@@ -44,5 +46,13 @@ public class UserDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getLike() {
+        return like;
+    }
+
+    public void setLike(String like) {
+        this.like = like;
     }
 }

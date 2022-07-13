@@ -22,4 +22,14 @@ public class UserController {
     public ResponseEntity<UserDTO> SignupApi(@RequestBody UserDTO user){
         return ResponseEntity.ok().body(userService.create(user));
     }
+
+    @PostMapping("login")
+    public ResponseEntity<Integer> LoginApi(@RequestBody UserDTO user){
+        return ResponseEntity.ok().body(userService.login(user.getId(),user.getPassword()));
+    }
+
+    @GetMapping("")
+    public ResponseEntity<String> GetLikeApi(@RequestParam int userCode){
+        return ResponseEntity.ok().body(userService.readById(userCode).get().getLike());
+    }
 }

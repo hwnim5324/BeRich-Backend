@@ -21,17 +21,28 @@ public class UserService {
         return jpauserrepository.save(user);
     }
 
-    public Optional<UserDTO> read(int id){
+    public Optional<UserDTO> readById(int id){
         return jpauserrepository.findById(id);
     }
 
-    public int login(String id,String pw){
+    public Optional<UserDTO> readByUserId(String id){
+        return jpauserrepository.findByUserId(id);
+    }
 
-        return -1;
+    public int login(String id,String pw){
+        UserDTO user = readByUserId(id).get();
+        if(user.getId()==null){
+            return 1;   //id doesn't exist
+        }
+        if(user.getPassword()==pw){
+            return 0;   //success
+        }else{
+            return -1;  //pw different
+        }
     }
 
     public UserDTO update(int usercode, String pw){
-        UserDTO user = read(usercode).get();
+        UserDTO user = readById(usercode).get();
         user.setPassword(pw);
         return jpauserrepository.save(user);
     }

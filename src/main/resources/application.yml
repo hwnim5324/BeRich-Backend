@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:mysql://203.229.62.18:3306/BeRich?characterEncoding=UTF-8&serverTimezone=UTC
+    username: hwnim5324
+    password: nam5324
+
+  #JPA settings
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    database: mysql
