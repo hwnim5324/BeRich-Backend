@@ -29,15 +29,17 @@ public class UserService {
         return jpauserrepository.findByUserId(id);
     }
 
-    public int login(String id,String pw){
+    public int login(String id, String pw){
         UserDTO user = readByUserId(id).get();
-        if(user.getId()==null){
+        if(user.getUserId()==null){
             return 1;   //id doesn't exist
         }
-        if(user.getPassword()==pw){
-            return 0;   //success
-        }else{
-            return -1;  //pw different
+        else {
+            if (user.getPassword().equals(pw)) {
+                return 0;   //success
+            } else {
+                return -1;  //pw different
+            }
         }
     }
 

@@ -1,9 +1,6 @@
 package berich.DTO;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Entity(name = "user")
@@ -11,9 +8,17 @@ public class UserDTO {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int usercode;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "userId")
     private String userId;
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "`like`")
     private String like;
 
     public int getUsercode() {
@@ -32,13 +37,9 @@ public class UserDTO {
         this.name = name;
     }
 
-    public String getId() {
-        return userId;
-    }
+    public String getUserId() { return userId; }
 
-    public void setId(String id) {
-        this.userId = id;
-    }
+    public void setUserId(String userId) { this.userId = userId; }
 
     public String getPassword() {
         return password;
