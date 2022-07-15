@@ -43,7 +43,7 @@ public class UserController {
         return ResponseEntity.ok().body(userService.readById(userCode).get());
     }
 
-    @PostMapping("/users")
+    @PatchMapping("/users")
     public ResponseEntity<UserDTO> UpdateUser(@RequestBody UserDTO user){
         return ResponseEntity.ok().body(userService.update(user.getUsercode(), user.getPassword()));
     }

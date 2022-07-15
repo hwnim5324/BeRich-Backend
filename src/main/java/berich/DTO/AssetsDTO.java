@@ -2,16 +2,17 @@ package berich.DTO;
 
 import org.json.simple.JSONArray;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity(name="assets")
 public class AssetsDTO {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int usercode;
+
+    @Column(name = "`deposit`")
     private int deposit;
+
+    @Column(name = "`stocks`")
     private String stocks;
 
     public int getUserCode() {

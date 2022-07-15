@@ -1,4 +1,4 @@
-package berich.service;
+package berich.DTO;
 
 public class StocksDTO {
     private int Stock;
