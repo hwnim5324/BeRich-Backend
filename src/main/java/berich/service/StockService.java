@@ -1,5 +1,7 @@
 package berich.service;
 
+import berich.DTO.StocksDTO;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -8,6 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,6 +55,7 @@ public class StockService {
             JSONObject obj = new JSONObject();
 
             obj = (JSONObject) parser.parse(response.toString());
+            System.out.println(obj.get("access_token").toString());
             System.out.println("Get Token Success.");
             return "Bearer " + obj.get("access_token").toString();
 
@@ -92,13 +96,15 @@ public class StockService {
         return "Can't Find";
     }
 
-    public JSONObject getStockPrice(String iscd, String dateStart, String dateEnd){
+    public String getTodayPrice(String iscd){
         String KIS = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice";
-        JSONObject obj = new JSONObject();
+        LocalDate date = LocalDate.now();
+        String today = date.toString().replace("-","");
+        String result = "";
 
         KIS = KIS + "?FID_COND_MRKT_DIV_CODE=J&FID_INPUT_ISCD=" + iscd
-                + "&FID_INPUT_DATE_1=" + dateStart
-                + "&FID_INPUT_DATE_2=" + dateEnd
+                + "&FID_INPUT_DATE_1=" + today
+                + "&FID_INPUT_DATE_2=" + today
                 + "&FID_PERIOD_DIV_CODE=D&FID_ORG_ADJ_PRC=1";
 
         try{
@@ -116,16 +122,61 @@ public class StockService {
             BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String response = br.readLine();
 
+            JSONObject obj = new JSONObject();
             JSONParser parser = new JSONParser();
             obj = (JSONObject) parser.parse(response.toString());
+            obj = (JSONObject) parser.parse(obj.get("output1").toString());
+
+            result = obj.get("stck_prpr").toString();
             System.out.println("Get Data Success.");
-            return obj;
+
+            return result;
 
         }catch (Exception e){
             e.printStackTrace();
         }
         System.out.println("Faild to get Data");
-        return obj;
+        return result;
+    }
+
+    public JSONArray getPricesByPeriod(String iscd, String startDate, String endDate){
+        String KIS = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice";
+        JSONArray result = new JSONArray();
+
+        KIS = KIS + "?FID_COND_MRKT_DIV_CODE=J&FID_INPUT_ISCD=" + iscd
+                + "&FID_INPUT_DATE_1=" + startDate
+                + "&FID_INPUT_DATE_2=" + endDate
+                + "&FID_PERIOD_DIV_CODE=D&FID_ORG_ADJ_PRC=1";
+
+        try{
+            URL url = new URL(KIS);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
+            con.setRequestMethod("GET");
+            con.setRequestProperty("content-type", "application/json; charset=utf-8");
+            con.setRequestProperty("Authorization", this.TOKEN);
+            con.setRequestProperty("appkey", SECRET.getAPPKEY());
+            con.setRequestProperty("appsecret", SECRET.getAPPSECRET());
+            con.setRequestProperty("tr_id", "FHKST03010100");
+            con.setRequestProperty("custtype", "P");
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String response = br.readLine();
+
+            JSONObject obj = new JSONObject();
+            JSONParser parser = new JSONParser();
+            obj = (JSONObject) parser.parse(response.toString());
+
+            result = (JSONArray) parser.parse(obj.get("output2").toString());
+
+            System.out.println("Get Data Success.");
+            return result;
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("Faild to get Data");
+        return result;
     }
 
 

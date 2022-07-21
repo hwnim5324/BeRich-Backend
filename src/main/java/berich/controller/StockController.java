@@ -1,6 +1,7 @@
 package berich.controller;
 
 import berich.service.StockService;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,14 +14,8 @@ public class StockController {
     StockService stockservice = new StockService();
 
     @GetMapping("/stocks")
-    public JSONObject getStockData(@RequestParam String isnm){
+    public JSONArray getStockDataByPeriod(@RequestParam String isnm, String startDate, String EndDate){
         String iscd = stockservice.readByName(isnm);
-        System.out.println(iscd);
-        LocalDate date = LocalDate.now();
-        String today = date.toString().replace("-","");
-        System.gc();
-
-        return stockservice.getStockPrice(iscd, today, today);
+        return stockservice.getPricesByPeriod(iscd, startDate, EndDate);
     }
-
 }
