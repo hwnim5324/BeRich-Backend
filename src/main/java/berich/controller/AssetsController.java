@@ -2,8 +2,10 @@ package berich.controller;
 
 import berich.DTO.AssetsDTO;
 import berich.service.AssetsService;
+import berich.service.StockService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class AssetsController {
 
     private final AssetsService assetsService;
+    private final StockService stockService = new StockService();
 
     @Autowired
     public AssetsController(AssetsService assetsService) {
@@ -47,7 +50,29 @@ public class AssetsController {
 
     @GetMapping("assets")
     public ResponseEntity<JSONObject> GetAssets(@RequestParam int userCode){
-//        assetsService.getStocks(userCode)
-        return ResponseEntity.ok().body(assetsService.getAssets(userCode));
+        JSONParser parser = new JSONParser();
+        JSONArray stocks = new JSONArray();
+        JSONArray newStocks = new JSONArray();
+
+        JSONObject result = assetsService.getAssets(userCode);
+        try{
+            stocks = (JSONArray) parser.parse(result.get("stocks").toString());
+            for(int i=0; i<stocks.size(); i++){
+                JSONObject obj = (JSONObject) parser.parse(stocks.get(i).toString());
+
+                String iscd = stockService.readByName(obj.get("stock").toString());
+                obj.remove("nowPrice");
+                obj.put("nowPrice", stockService.getTodayPrice(iscd).toString());
+
+                newStocks.add(obj);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        result.remove("stocks");
+        result.put("stocks", newStocks);
+
+        return ResponseEntity.ok().body(result);
     }
 }

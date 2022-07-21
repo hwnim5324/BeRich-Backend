@@ -42,6 +42,7 @@ public class AssetsService {
         String fromDB = assets.getStocks();
         JSONParser parser = new JSONParser();
         JSONArray stocks = new JSONArray();
+        JSONObject result = new JSONObject();
 
         try{
             stocks = (JSONArray) parser.parse(fromDB);
@@ -49,7 +50,6 @@ public class AssetsService {
             e.printStackTrace();
         }
 
-        JSONObject result = new JSONObject();
         result.put("deposit", assets.getDeposit());
         result.put("stocks", stocks);
 
