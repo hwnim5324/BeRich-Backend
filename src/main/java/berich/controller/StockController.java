@@ -14,8 +14,8 @@ public class StockController {
     StockService stockservice = new StockService();
 
     @GetMapping("/stocks")
-    public JSONArray getStockDataByPeriod(@RequestParam String isnm, String startDate, String EndDate){
+    public JSONArray getStockDataByPeriod(@RequestParam String isnm, String startDate, String endDate){
         String iscd = stockservice.readByName(isnm);
-        return stockservice.getPricesByPeriod(iscd, startDate, EndDate);
+        return stockservice.getPricesByPeriod(iscd, startDate, endDate);
     }
 }

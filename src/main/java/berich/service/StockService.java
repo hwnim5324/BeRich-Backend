@@ -179,7 +179,43 @@ public class StockService {
         return result;
     }
 
+    public void getIndexes(String iscd, String startDate, String endDate){
+        String KIS = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-daily-indexchartprice";
+        JSONArray result = new JSONArray();
 
+        KIS = KIS + "?FID_COND_MRKT_DIV_CODE=U&FID_INPUT_ISCD=" + iscd
+                + "&FID_INPUT_DATE_1=" + startDate
+                + "&FID_INPUT_DATE_2=" + endDate
+                + "&FID_PERIOD_DIV_CODE=D";
+
+        try{
+            URL url = new URL(KIS);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
+            con.setRequestMethod("GET");
+            con.setRequestProperty("content-type", "application/json; charset=utf-8");
+            con.setRequestProperty("Authorization", this.TOKEN);
+            con.setRequestProperty("appkey", SECRET.getAPPKEY());
+            con.setRequestProperty("appsecret", SECRET.getAPPSECRET());
+            con.setRequestProperty("tr_id", "FHKUP03500100");
+            con.setRequestProperty("custtype", "P");
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String response = br.readLine();
+
+            JSONObject obj = new JSONObject();
+            JSONParser parser = new JSONParser();
+            obj = (JSONObject) parser.parse(response.toString());
+
+            result = (JSONArray) parser.parse(obj.get("output2").toString());
+
+            System.out.println("Get Data Success.");
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("Faild to get Data");
+    }
 
 
 

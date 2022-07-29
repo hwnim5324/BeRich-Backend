@@ -73,6 +73,8 @@ public class AssetsController {
         result.remove("stocks");
         result.put("stocks", newStocks);
 
+//        result로 데이터베이스 업데이트해야함.
+
         return ResponseEntity.ok().body(result);
     }
 }
