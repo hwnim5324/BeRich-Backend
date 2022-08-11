@@ -8,10 +8,7 @@ import org.json.simple.parser.JSONParser;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -179,9 +176,9 @@ public class StockService {
         return result;
     }
 
-    public void getIndexes(String iscd, String startDate, String endDate){
+    public JSONObject getIndexes(String iscd, String startDate, String endDate){
         String KIS = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-daily-indexchartprice";
-        JSONArray result = new JSONArray();
+        JSONObject result = new JSONObject();
 
         KIS = KIS + "?FID_COND_MRKT_DIV_CODE=U&FID_INPUT_ISCD=" + iscd
                 + "&FID_INPUT_DATE_1=" + startDate
@@ -206,17 +203,18 @@ public class StockService {
             JSONObject obj = new JSONObject();
             JSONParser parser = new JSONParser();
             obj = (JSONObject) parser.parse(response.toString());
+            obj = (JSONObject) parser.parse(obj.get("output1").toString());
 
-            result = (JSONArray) parser.parse(obj.get("output2").toString());
+//            result = (JSONArray) parser.parse(obj.get("output2").toString());
 
             System.out.println("Get Data Success.");
+            return obj;
 
         }catch (Exception e){
             e.printStackTrace();
         }
         System.out.println("Faild to get Data");
+        return result;
     }
-
-
 
 }

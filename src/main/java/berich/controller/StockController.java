@@ -18,4 +18,9 @@ public class StockController {
         String iscd = stockservice.readByName(isnm);
         return stockservice.getPricesByPeriod(iscd, startDate, endDate);
     }
+
+    @GetMapping("/indexes")
+    public JSONObject getIndexDataByCode(@RequestParam String iscd, String startDate, String endDate){
+        return stockservice.getIndexes(iscd, startDate, endDate);
+    }
 }
