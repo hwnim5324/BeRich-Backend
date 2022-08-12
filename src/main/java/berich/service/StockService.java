@@ -205,10 +205,14 @@ public class StockService {
             obj = (JSONObject) parser.parse(response.toString());
             obj = (JSONObject) parser.parse(obj.get("output1").toString());
 
-//            result = (JSONArray) parser.parse(obj.get("output2").toString());
+            System.out.println(">>>>>>>>>>>"+obj);
+
+            result.put("BSTP_NMIX_PRDY_CTRT",obj.get("bstp_nmix_prdy_ctrt"));
+            result.put("PRDY_NMIX",obj.get("prdy_nmix"));
+            result.put("BSTP_NMIX_PRPR",obj.get("bstp_nmix_prpr"));
 
             System.out.println("Get Data Success.");
-            return obj;
+            return result;
 
         }catch (Exception e){
             e.printStackTrace();

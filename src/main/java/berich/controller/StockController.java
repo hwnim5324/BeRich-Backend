@@ -5,7 +5,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 
 @CrossOrigin(origins="*", allowedHeaders = "*")
 @RestController
@@ -20,7 +22,14 @@ public class StockController {
     }
 
     @GetMapping("/indexes")
-    public JSONObject getIndexDataByCode(@RequestParam String iscd, String startDate, String endDate){
-        return stockservice.getIndexes(iscd, startDate, endDate);
+    public JSONObject getIndexDataByCode(@RequestParam String secretKey){
+        JSONObject obj = new JSONObject();
+        SimpleDateFormat date = new SimpleDateFormat("yyyyMMdd");
+        Calendar cal = Calendar.getInstance();
+        String today = date.format(cal.getTime());
+
+        obj.put("KOSPI", stockservice.getIndexes("0001", today, today));
+        obj.put("KOSDAQ", stockservice.getIndexes("1001", today, today));
+        return obj;
     }
 }
