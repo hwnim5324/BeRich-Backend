@@ -22,7 +22,7 @@ public class StockController {
     }
 
     @GetMapping("/indexes")
-    public JSONObject getIndexDataByCode(@RequestParam String secretKey){
+    public JSONObject getIndexDataByCode(){
         JSONObject obj = new JSONObject();
         SimpleDateFormat date = new SimpleDateFormat("yyyyMMdd");
         Calendar cal = Calendar.getInstance();
