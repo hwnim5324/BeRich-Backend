@@ -71,7 +71,7 @@ public class StockService {
     }
 
     public String readByName(String isnm){
-        String CSV_PATH = "C:/Users/hwnim/Desktop/BeRich_Backend/berich/build/resources/main/assets/StockList.csv";
+        String CSV_PATH = "C:/Users/남현우/Desktop/_/수업외 자기개발/2022/BeRich-Backend/src/main/resources/assets/StockList.csv";
         File csv = new File(CSV_PATH);
         BufferedReader br = null;
         try{
